@@ -1,7 +1,13 @@
+version 1.0.0
+
+add data for kana without Digraphs and Diacritics
+
 Version 0.0.3
+
 corrects folder name for examples
 
 Version 0.0.2
+
 add exemple
 
 Version 0.0.1
