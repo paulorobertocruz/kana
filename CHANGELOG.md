@@ -1,3 +1,6 @@
+Version 0.0.2
+add exemple
+
 Version 0.0.1
 
 add function getKatakana
