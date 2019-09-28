@@ -1,15 +1,15 @@
 const ROMAJI_HIRAGANA = {
-  "a":"あ",
+  "a": "あ",
 };
 
 const HIRAGANA_ROMAJI = {
-  "あ":"a",
+  "あ": "a",
 };
 
 const ROMAJI_KATAKANA = {
-  "a":"ア",
+  "a": "ア",
 };
 
 const KATAKANA_ROMAJI = {
-  "ア":"a",
+  "ア": "a",
 };
