@@ -1,5 +1,5 @@
 name: kana
-version: 0.0.2
+version: 0.0.3
 homepage: https://github.com/paulorobertocruz/kana
 description: package to convert from kana(hiragana and katakana) to romaji and back
 authors:

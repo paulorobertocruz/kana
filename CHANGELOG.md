@@ -1,3 +1,6 @@
+Version 0.0.3
+corrects folder name for examples
+
 Version 0.0.2
 add exemple
 
