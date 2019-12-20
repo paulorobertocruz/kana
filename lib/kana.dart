@@ -4,3 +4,4 @@ export 'package:kana/src/to_hiragana.dart';
 export 'package:kana/src/to_kana.dart' show toKana;
 export 'package:kana/src/to_romaji.dart' show toRomaji;
 export 'package:kana/src/data.dart';
+export 'package:kana/src/tokenize.dart';
