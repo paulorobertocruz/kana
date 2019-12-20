@@ -4,8 +4,6 @@ import 'package:kana/src/constants.dart' show ROMANIZATIONS_HEPBURN;
 
 var kanaToHepburnMap = null;
 
-/* eslint-disable */
-// prettier-ignore
 const BASIC_ROMAJI = {
   'あ': 'a',
   'い': 'i',
@@ -86,7 +84,7 @@ const BASIC_ROMAJI = {
   'ゔぇ': 've',
   'ゔぉ': 'vo',
 };
-/* eslint-enable  */
+
 
 const SPECIAL_SYMBOLS = {
   '。': '.',
