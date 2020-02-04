@@ -71,23 +71,23 @@ applyMapping(String string, Map mapping, bool convertEnding) {
 
 // transform the tree, so that for example hepburnTree['ゔ']['ぁ'][''] == 'va'
 // or kanaTree['k']['y']['a'][''] == 'きゃ'
-transform(Map<dynamic, dynamic> tree) {
-  print(tree.runtimeType);
-  return tree.entries.reduce((map, e) {
-    final char = e.key;
-    final subtree = e.value;
-    final endOfBranch = subtree is String;
-    return MapEntry(char, endOfBranch ? {'': subtree} : transform(subtree));
-  }).value;
+Map<dynamic, dynamic> transform(Map<dynamic, dynamic> tree) {
+  var map = {};  
+  for (var entrie in tree.entries) {
+    final bool endOfBranch = entrie.value is String;
+    map[entrie.key] = endOfBranch ? {'': entrie.value} : transform(entrie.value);
+  }  
+  return map;
 }
 
-getSubTreeOf(tree, string) {
-  return string.split('').reduce((correctSubTree, char) {
-    if (correctSubTree[char] == null) {
-      correctSubTree[char] = {};
+Map<dynamic, dynamic> getSubTreeOf(tree, String string) {
+  var a = string.split('').fold(tree, (current, char){
+    if(current[char] == null){
+      current[char] = {};
     }
-    return correctSubTree[char];
-  }, tree);
+    return current[char];
+  });  
+  return a;
 }
 
 /**
