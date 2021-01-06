@@ -218,7 +218,7 @@ const AIUEO_CONSTRUCTIONS = {
 createRomajiToKanaMap() {
   final kanaTree = transform(BASIC_KUNREI);
   // pseudo partial application
-  final subtreeOf = (string) => getSubTreeOf(kanaTree, string);
+  final subtreeOf = (String string) => getSubTreeOf(kanaTree, string);
 
   // add tya, sya, etc.
   CONSONANTS.entries.forEach((e) {
@@ -232,8 +232,8 @@ createRomajiToKanaMap() {
     });
   });
 
-  SPECIAL_SYMBOLS.entries.forEach(([symbol, jsymbol]) {
-    subtreeOf(symbol)[''] = jsymbol;
+  SPECIAL_SYMBOLS.entries.forEach((entry) {
+    subtreeOf(entry.key)[''] = entry.value;
   });
 
   // things like うぃ, くぃ, etc.
@@ -254,38 +254,40 @@ createRomajiToKanaMap() {
   });
 
   // c is equivalent to k, but not for chi, cha, etc. that's why we have to make a copy of k
-  kanaTree.c = json.decode(json.encode(kanaTree.k));
+  kanaTree['c'] = json.decode(json.encode(kanaTree['k']));
 
   ALIASES.entries.forEach((e) {
-    String string = e.key;
-    var alternative = e.value;
-    final allExceptLast = string.substring(0, string.length - 1);
-    final last = string.codeUnitAt(string.length - 1);
+    final allExceptLast =
+        e.key.length > 1 ? e.key.substring(0, e.key.length - 1) : e.key;
+    final String last = String.fromCharCode(e.key.codeUnitAt(e.key.length - 1));
     final parentTree = subtreeOf(allExceptLast);
     // copy to avoid recursive containment
-    parentTree[last] = json.decode(json.encode(subtreeOf(alternative)));
+    parentTree[last] = json.decode(json.encode(subtreeOf(e.value)));
   });
 
   List getAlternatives(string) {
-    return [
-      ...ALIASES.entries,
+    final List list = [
+      ...ALIASES.entries.toList(),
       ...[
-        ['c', 'k']
+        [MapEntry('c', null), MapEntry('k', null)]
       ]
-    ].reduce((list, e) {
-      List llist = list as List;
-      List le = e as List;
-      return string.startsWith(le[1])
-          ? llist.addAll(string.replace(le[1], le[0]))
-          : llist;
+    ];
+    final returnList = [];
+    list.forEach((element) {
+      element as MapEntry<String, dynamic>;
+      string.startsWith(element.key)
+          ? returnList.addAll(string.replace(element.value, element.key))
+          : returnList;
     });
+    return returnList;
   }
 
   SMALL_LETTERS.entries.forEach((e) {
     final kunreiRoma = e.key;
     final kana = e.value;
-    final last = (char) => char.charAt(char.length - 1);
-    final allExceptLast = (chars) => chars.slice(0, chars.length - 1);
+    final last = (String char) => char[char.length - 1];
+    final allExceptLast =
+        (String chars) => chars.substring(0, chars.length - 1);
     final xRoma = 'x${kunreiRoma}';
     final xSubtree = subtreeOf(xRoma);
     xSubtree[''] = kana;
@@ -303,8 +305,8 @@ createRomajiToKanaMap() {
     });
   });
 
-  SPECIAL_CASES.entries.forEach(([string, kana]) {
-    subtreeOf(string)[''] = kana;
+  SPECIAL_CASES.entries.forEach((entry) {
+    subtreeOf(entry.key)[''] = entry.value;
   });
 
   // add kka, tta, etc.

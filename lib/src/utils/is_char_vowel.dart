@@ -1,7 +1,8 @@
 import 'package:kana/src/utils/is_empty.dart';
 
-bool isCharVowel(String char, bool includeY) {
+bool isCharVowel([String char, bool includeY = true]) {
   if (isEmpty(char)) return false;
-  //const regexp = includeY ? /[aeiouy]/ : /[aeiou]/;
-  //return char.toLowerCase().charAt(0).search(regexp) !== -1;
+  final String regString = includeY ? r"^[aeiouy]$" : r"^[aeiou]$";
+  final regexp = RegExp(regString);
+  return regexp.hasMatch(char[0]);
 }

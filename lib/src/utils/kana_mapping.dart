@@ -71,23 +71,41 @@ applyMapping(String string, Map mapping, bool convertEnding) {
 
 // transform the tree, so that for example hepburnTree['ゔ']['ぁ'][''] == 'va'
 // or kanaTree['k']['y']['a'][''] == 'きゃ'
-transform(Map<dynamic, dynamic> tree) {
-  print(tree.runtimeType);
-  return tree.entries.reduce((map, e) {
-    final char = e.key;
-    final subtree = e.value;
-    final endOfBranch = subtree is String;
-    return MapEntry(char, endOfBranch ? {'': subtree} : transform(subtree));
-  }).value;
+Map transform(dynamic tree) {
+  if (tree is String) return doTransformList(tree.split(''));
+  if (tree is Map) return doTransformMap(tree);
+  return {};
 }
 
-getSubTreeOf(tree, string) {
-  return string.split('').reduce((correctSubTree, char) {
-    if (correctSubTree[char] == null) {
-      correctSubTree[char] = {};
+Map doTransformList(List<String> list) {
+  return Map.fromIterable(Map.fromIterable(list).entries.map((e) {
+    return {
+      e.key,
+      {'': e.value}
+    };
+  }));
+}
+
+Map doTransformMap(Map tree) {
+  return tree.map((key, value) {
+    return MapEntry(key, value is Map ? doTransformMap(value) : {'': value});
+  });
+}
+
+Map getSubTreeOf(Map tree, String string) {
+  Map v = {};
+  final list = string.split('');
+  final reducer = (acumulador, char) {
+    if (acumulador[char] == null) {
+      acumulador[char] = {};
     }
-    return correctSubTree[char];
-  }, tree);
+    return acumulador[char];
+  };
+  v = reducer(tree, list[0]);
+  list.skip(1).forEach((s) {
+    v = reducer(v, s);
+  });
+  return v;
 }
 
 /**
@@ -101,7 +119,7 @@ getSubTreeOf(tree, string) {
  * toRomaji("It's 茎 ちゃ よ", { customRomajiMapping: sillyMap });
  * // => 'It's cookie time yo';
  */
-Function createCustomMapping(customMap) {
+Function createCustomMapping([Map customMap]) {
   final customTree = {};
   if (customMap is Map) {
     customMap.forEach((roma, kana) {
@@ -136,11 +154,8 @@ Function createCustomMapping(customMap) {
 }
 
 // allow consumer to pass either function or object as customMapping
-mergeCustomMapping(map, customMapping) {
-  if (!customMapping) {
-    return map;
-  }
-  return customMapping is Function
-      ? customMapping(map)
-      : createCustomMapping(customMapping)(map);
+mergeCustomMapping([Map map, dynamic customMapping]) {
+  if (customMapping is Function) return customMapping(map);
+  if (customMapping is Map) createCustomMapping(customMapping)(map);
+  return map;
 }

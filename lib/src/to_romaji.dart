@@ -6,7 +6,7 @@ import 'package:kana/src/utils/kana_to_romaji_map.dart'
 import 'package:kana/src/utils/kana_mapping.dart'
     show applyMapping, mergeCustomMapping;
 
-String toRomaji(input, [options = const {}]) {
+String toRomaji(String input, [options = const {}]) {
   final mergedOptions = mergeWithDefaultOptions(options);
   // just throw away the substring index information and just concatenate all the kana
   return splitIntoRomaji(input, mergedOptions).map((romajiToken) {
@@ -14,7 +14,7 @@ String toRomaji(input, [options = const {}]) {
     var end = romajiToken[1];
     var romaji = romajiToken[2];
     final makeUpperCase =
-        options["upcaseKatakana"] && isKatakana(input.slice(start, end));
+        options["upcaseKatakana"] && isKatakana(input.substring(start, end));
     return makeUpperCase ? romaji.toUpperCase() : romaji;
   }).join('');
 }

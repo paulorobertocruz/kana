@@ -171,7 +171,7 @@ getKanaToHepburnTree() {
 }
 
 getKanaToRomajiTree(fullOptions) {
-  switch (fullOptions.romanization) {
+  switch (fullOptions['romanization']) {
     case ROMANIZATIONS_HEPBURN:
       return getKanaToHepburnTree();
     default:
@@ -254,10 +254,10 @@ createKanaToHepburnMap() {
 }
 
 resolveTsu(tree) {
-  return tree.entries.reduce((tsuTree, [key, value]) {
+  return tree.entries.reduce((tsuTree, [key, String value]) {
     if (!key) {
       // we have reached the bottom of this branch
-      final consonant = value.charAt(0);
+      final consonant = value[0];
       tsuTree[key] = SOKUON_WHITELIST.keys.contains(consonant)
           ? SOKUON_WHITELIST[consonant] + value
           : value;

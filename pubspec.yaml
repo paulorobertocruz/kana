@@ -5,7 +5,7 @@ description: package to convert from kana(hiragana and katakana) to romaji and b
 authors:
 - Paulo Roberto Cruz <paulo.cruz9@gmail.com>
 environment:
-  sdk: '>=2.0.0 <3.0.0'
+  sdk: '>=2.2.2 <3.0.0'
 
 dev_dependencies:
   test: ^1.15.7

@@ -1,0 +1,52 @@
+src/utils/dom.js exclude
+src/utils/logInputEvents.js exclude
+bind.js exclude
+unbind.js exclude
+src/utils/typeOf.js exclude
+
+src/utils/getChunk.js ok
+src/utils/getChunkSize.js ok
+src/utils/isEmpty.js ok
+src/utils/isCharConsonant.js ok
+src/utils/isCharEnglishPunctuation.js ok
+src/utils/isCharHiragana.js ok
+src/utils/isCharInRange.js ok
+src/utils/isCharJapanese.js ok
+src/utils/isCharJapanesePunctuation.js ok
+src/utils/isCharKatakana.js ok
+src/utils/isCharKana.js ok 
+src/utils/isCharKanji.js ok
+src/utils/isCharLongDash.js ok
+src/utils/isCharPunctuation.js ok
+src/utils/isCharRomaji.js ok
+src/utils/isCharSlashDot.js ok
+src/utils/isCharUpperCase.js ok
+src/utils/isCharVowel.js ok
+src/utils/mergeWithDefaultOptions.js ok 
+
+
+src/utils/kanaMapping.js
+src/utils/hiraganaToKatakana.js
+src/utils/kanaToRomajiMap.js
+src/utils/katakanaToHiragana.js
+src/utils/romajiToKanaMap.js
+
+
+constants.js
+
+isHiragana.js
+isJapanese.js
+isKana.js
+isKanji.js
+isKatakana.js
+isMixed.js
+isRomaji.js
+tokenize.js
+
+stripOkurigana.js
+toHiragana.js
+toKana.js
+toKatakana.js
+toRomaji.js
+
+
