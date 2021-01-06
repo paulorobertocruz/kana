@@ -3,8 +3,7 @@ import 'package:kana/src/utils/is_char_long_dash.dart';
 import 'package:kana/src/utils/is_char_slash_dot.dart';
 import 'package:kana/src/utils/is_char_katakana.dart';
 
-final isCharInitialLongDash =
-    (char, index) => isCharLongDash(char) && index < 1;
+bool isCharInitialLongDash(char, index) {return isCharLongDash(char) && index < 1;}
 final isCharInnerLongDash = (char, index) => isCharLongDash(char) && index > 0;
 final isKanaAsSymbol = (char) => ['ヶ', 'ヵ'].contains(char);
 
