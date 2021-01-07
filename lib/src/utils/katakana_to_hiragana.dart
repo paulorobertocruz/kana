@@ -2,8 +2,9 @@ import 'package:kana/src/constants.dart' show KATAKANA_START, HIRAGANA_START;
 import 'package:kana/src/utils/is_char_long_dash.dart';
 import 'package:kana/src/utils/is_char_slash_dot.dart';
 import 'package:kana/src/utils/is_char_katakana.dart';
+import 'package:kana/src/utils/is_empty.dart';
 
-bool isCharInitialLongDash(char, index) {return isCharLongDash(char) && index < 1;}
+bool isCharInitialLongDash(char, index) => isCharLongDash(char) && index < 1;
 final isCharInnerLongDash = (char, index) => isCharLongDash(char) && index > 0;
 final isKanaAsSymbol = (char) => ['ヶ', 'ヵ'].contains(char);
 
@@ -17,41 +18,38 @@ final LONG_VOWELS = {
 
 // inject toRomaji to avoid circular dependency between toRomaji <-> katakanaToHiragana
 String katakanaToHiragana(
-    String input, String Function(String) toRomaji, [isDestinationRomaji]) {
+    [String input = '',
+    String Function(String) toRomaji,
+    bool isDestinationRomaji]) {
   String previousKana = '';
-  String hira = '';
-  String combine(String hira, String char, int index) {
+  return input.split('').asMap().entries.fold([], (hira, entry) {    
+    int index = entry.key;
+    String char = entry.value;
+    // Short circuit to avoid incorrect codeshift for 'ー' and '・'
     if (isCharSlashDot(char) ||
         isCharInitialLongDash(char, index) ||
         isKanaAsSymbol(char)) {
-      return hira += char;
+      return hira..addAll(char.split(''));
       // Transform long vowels: 'オー' to 'おう'
-    } else if (previousKana != null && isCharInnerLongDash(char, index)) {
+    } else if (!isEmpty(previousKana) && isCharInnerLongDash(char, index)) {
       // Transform previousKana back to romaji, and slice off the vowel
       final romaji = toRomaji(previousKana).substring(-1);
       // However, ensure 'オー' => 'おお' => 'oo' if this is a transform on the way to romaji
       if (isCharKatakana(input[index - 1]) &&
           romaji == 'o' &&
           isDestinationRomaji) {
-        return hira += 'お';
+        return hira..addAll(['お']);
       }
-      return hira += LONG_VOWELS[romaji];
+      return hira..addAll(LONG_VOWELS[romaji].split(''));
     } else if (!isCharLongDash(char) && isCharKatakana(char)) {
       // Shift charcode.
       final code = char.codeUnitAt(0) + (HIRAGANA_START - KATAKANA_START);
       final hiraChar = String.fromCharCode(code);
       previousKana = hiraChar;
-      return hira += hiraChar;
+      return hira..addAll(hiraChar.split(''));
     }
     // Pass non katakana chars through
     previousKana = '';
-    return hira += char;
-  }
-
-  for (int index = 0; index < input.length; index++) {
-    final String char = input[index];
-    hira = combine(hira, char, index);
-  }
-
-  return hira;
+    return hira..addAll(char.split(''));
+  }).join('');
 }

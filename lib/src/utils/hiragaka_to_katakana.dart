@@ -3,7 +3,7 @@ import 'package:kana/src/utils/is_char_slash_dot.dart';
 import 'package:kana/src/utils/is_char_hiragana.dart';
 import 'package:kana/src/constants.dart' show HIRAGANA_START, KATAKANA_START;
 
-String hiraganaToKatakana(String input) {
+String hiraganaToKatakana([String input = '']) {
   final kata = [];
   input.split("").forEach((c) {
     if (isCharLongDash(c) || isCharSlashDot(c)) {
