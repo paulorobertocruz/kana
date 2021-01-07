@@ -2,7 +2,7 @@ import 'package:kana/src/constants.dart' show TO_KANA_METHODS;
 import 'package:kana/src/utils/merge_with_default_options.dart';
 import 'package:kana/src/utils/romaji_to_kana_map.dart'
     show getRomajiToKanaTree, IME_MODE_MAP, USE_OBSOLETE_KANA_MAP;
-import 'package:kana/src/utils/kana_mapping.dart'
+import 'package:kana/src/utils/kana_mapping/kana_mapping.dart'
     show applyMapping, mergeCustomMapping;
 import 'package:kana/src/utils/is_char_upper_case.dart';
 import 'package:kana/src/utils/hiragaka_to_katakana.dart';

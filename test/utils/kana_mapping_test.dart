@@ -1,6 +1,6 @@
 import 'package:test/test.dart';
 import 'package:kana/kana.dart' show toKana, toRomaji;
-import 'package:kana/src/utils/kana_mapping.dart'
+import 'package:kana/src/utils/kana_mapping/kana_mapping.dart'
     show mergeCustomMapping, createCustomMapping, transform;
 
 void main() {

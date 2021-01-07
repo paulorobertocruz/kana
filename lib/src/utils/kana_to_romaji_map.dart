@@ -1,5 +1,5 @@
 import 'dart:convert' show json;
-import 'package:kana/src/utils/kana_mapping.dart' show transform, getSubTreeOf;
+import 'package:kana/src/utils/kana_mapping/kana_mapping.dart' show transform, getSubTreeOf;
 import 'package:kana/src/constants.dart' show ROMANIZATIONS_HEPBURN;
 
 var kanaToHepburnMap = null;

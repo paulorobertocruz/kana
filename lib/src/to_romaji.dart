@@ -3,7 +3,7 @@ import 'package:kana/src/utils/katakana_to_hiragana.dart';
 import 'package:kana/src/is_katakana.dart';
 import 'package:kana/src/utils/kana_to_romaji_map.dart'
     show getKanaToRomajiTree;
-import 'package:kana/src/utils/kana_mapping.dart'
+import 'package:kana/src/utils/kana_mapping/kana_mapping.dart'
     show applyMapping, mergeCustomMapping;
 
 String toRomaji(String input, [options = const {}]) {

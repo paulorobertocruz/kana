@@ -1,5 +1,5 @@
 import 'dart:convert';
-import 'package:kana/src/utils/kana_mapping.dart'
+import 'package:kana/src/utils/kana_mapping/kana_mapping.dart'
     show transform, getSubTreeOf, createCustomMapping;
 
 // NOTE: not exactly kunrei shiki, for example ぢゃ -> dya instead of zya, to avoid name clashing
